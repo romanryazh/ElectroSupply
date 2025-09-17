@@ -7,4 +7,6 @@ public interface IPowerStation
     public IReadOnlyCollection<IGenerator> Generators { get; }
     
     public void AddGenerator(IGenerator generator);
+    
+    public void AddRangeGenerators(IEnumerable<IGenerator> generators);
 }

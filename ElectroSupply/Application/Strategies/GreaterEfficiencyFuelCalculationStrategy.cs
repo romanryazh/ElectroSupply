@@ -18,7 +18,7 @@ public class GreaterEfficiencyFuelCalculationStrategy : IFuelCalculationStrategy
         {
             if (power >= requiredPower.Value) break;
 
-            power += generator.Efficiency;
+            power += generator.Power.Value;
             usedGenerators.Add(generator);
             fuel += generator.FuelConsumption.Value * 24 * days.Value;
         }
@@ -29,7 +29,7 @@ public class GreaterEfficiencyFuelCalculationStrategy : IFuelCalculationStrategy
                 "Не удалось выполнить операцию - недостаточно мощности предоставленных генераторов");
         }
         
-        return (usedGenerators, new Fuel(fuel));
+        return (usedGenerators.AsReadOnly(), new Fuel(fuel));
     }
     
 }
