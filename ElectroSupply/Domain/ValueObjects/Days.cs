@@ -1,3 +1,5 @@
+using System.Globalization;
+
 namespace ElectroSupply.Domain.ValueObjects;
 
 public record Days
@@ -12,5 +14,10 @@ public record Days
         }
 
         Value = value;
+    }
+
+    public override string ToString()
+    {
+        return Value.ToString(CultureInfo.InvariantCulture);
     }
 }

@@ -15,8 +15,8 @@ public class FuelCalculator : IFuelCalculator
     }
     
     public (IReadOnlyCollection<IGenerator>, Fuel totalFuel) CalculateRequiredFuel
-        (double requiredPower, int days, IReadOnlyCollection<IGenerator> generators)
+        (Power requiredPower, Days days, IReadOnlyCollection<IGenerator> generators)
     {
-        return _strategy.Calculate(new Power(requiredPower), new Days(days), generators);
+        return _strategy.Calculate(requiredPower, days, generators);
     }
 }

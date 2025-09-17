@@ -1,3 +1,5 @@
+using System.Globalization;
+
 namespace ElectroSupply.Domain.ValueObjects;
 
 public record Fuel
@@ -12,5 +14,10 @@ public record Fuel
         }
 
         Value = value;
+    }
+
+    public override string ToString()
+    {
+        return Value.ToString(CultureInfo.InvariantCulture);
     }
 }
