@@ -1,7 +1,11 @@
 using ElectroSupply.Domain.Interfaces;
+using ArgumentException = System.ArgumentException;
 
 namespace ElectroSupply.Domain.Entities;
 
+/// <summary>
+/// Электростанция для вырабатывания электричества
+/// </summary>
 public class PowerStation : IPowerStation
 {
     private List<IGenerator> _generators;
@@ -23,24 +27,35 @@ public class PowerStation : IPowerStation
     }
 
     /// <summary>
-    /// Фабричный метод создания нового экземпляра <see cref="PowerStation"/>
+    /// Фабричный метод, создаёт новый экземпляр <see cref="PowerStation"/>
     /// </summary>
     /// <param name="name">Название</param>
     /// <returns>Новый экземпляр <see cref="PowerStation"/></returns>
+    /// <exception cref="ArgumentException">
+    /// Выбрасывается если <paramref name="name"/> пустое или null
+    /// </exception>
     public static PowerStation Create(string name)
     {
+        if (string.IsNullOrWhiteSpace(name))
+        {
+            throw new ArgumentException("Значение не может быть null или пустым.", nameof(name));
+        }
         return new PowerStation(name);
     }
-    
+
     /// <summary>
-    /// Добавить генератор
+    /// Добавляет генератор на электростанцию
     /// </summary>
-    /// <param name="generator">Добавляемый генератор</param>
+    /// <param name="generator"></param>
     public void AddGenerator(IGenerator generator)
     {
         _generators.Add(generator);
     }
 
+    /// <summary>
+    /// Добавляет коллекцию генераторов на электростанцию
+    /// </summary>
+    /// <param name="generators">Коллекция добавляемых генераторов</param>
     public void AddRangeGenerators(IEnumerable<IGenerator> generators)
     {
         _generators.AddRange(generators);

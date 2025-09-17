@@ -4,8 +4,15 @@ using ElectroSupply.Domain.ValueObjects;
 
 namespace ElectroSupply.UI.ConsoleUI;
 
+/// <summary>
+/// Консольный пользовательский интерфейс для взаимодействия с приложением через командную строку
+/// </summary>
 public class ConsoleUserInterface : IUserInterface
 {
+    /// <summary>
+    /// Считывает генераторы от пользователя
+    /// </summary>
+    /// <returns>Предоставленные генераторы</returns>
     public IReadOnlyCollection<IGenerator> ReadGenerators()
     {
         Console.WriteLine("Введите количество генераторов: ");
@@ -16,7 +23,9 @@ public class ConsoleUserInterface : IUserInterface
         {
             Console.WriteLine($"Генератор {i}: ");
             Console.Write($"\tНазвание: ");
-            var name = Console.ReadLine() ?? $"Генератор {i}";
+            var name = Console.ReadLine();
+            if (string.IsNullOrWhiteSpace(name))
+                name = $"Генератор {i}";
             Console.Write($"\tМощность(кВт): ");
             var power = ReadDouble();
             Console.Write("\tПотребление(л/ч): ");
@@ -28,6 +37,10 @@ public class ConsoleUserInterface : IUserInterface
         return generators;
     }
 
+    /// <summary>
+    /// Считывает требуемую мощность от пользователя
+    /// </summary>
+    /// <returns>Требуемая мощность</returns>
     public Power ReadRequiredPower()
     {
         Console.Write("Введите требуемую мощность (кВт): ");
@@ -35,6 +48,10 @@ public class ConsoleUserInterface : IUserInterface
         return new Power(power);
     }
 
+    /// <summary>
+    /// Считывает требуемое количество дней от пользователя
+    /// </summary>
+    /// <returns>Количество дней</returns>
     public Days ReadRequiredDays()
     {
         Console.Write("Введите количество дней: ");
@@ -42,6 +59,11 @@ public class ConsoleUserInterface : IUserInterface
         return new Days(days);
     }
 
+    /// <summary>
+    /// Выводит результат
+    /// </summary>
+    /// <param name="generators">Выбранные генераторы</param>
+    /// <param name="totalFuel">Требуемое общее топливо</param>
     public void DisplayResult(IReadOnlyCollection<IGenerator> generators, Fuel totalFuel)
     {
         Console.WriteLine("ИТОГИ:\n");
@@ -56,6 +78,10 @@ public class ConsoleUserInterface : IUserInterface
         Console.WriteLine("\nПоздравляем! Благодаря вам \"Северные интеллектуальные решения\" экономят на генераторах!");
     }
 
+    /// <summary>
+    /// Выводит сообщение об ошибке
+    /// </summary>
+    /// <param name="message">Текст сообщения</param>
     public void DisplayError(string message)
     {
         Console.WriteLine(message);

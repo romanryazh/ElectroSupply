@@ -3,8 +3,22 @@ using ElectroSupply.Domain.ValueObjects;
 
 namespace ElectroSupply.Application.Strategies;
 
+/// <summary>
+/// Стратегия расчёта потребляемого топлива с выборкой генераторов по их эффективности
+/// (используя в первую очередь самые эффективные)
+/// </summary>
 public class GreaterEfficiencyFuelCalculationStrategy : IFuelCalculationStrategy
 {
+    /// <summary>
+    /// Вычисляет итоговое количество топлива для выбранных генераторов на указанный промежуток времени 
+    /// </summary>
+    /// <param name="requiredPower">Необходимая мощность</param>
+    /// <param name="days">Необходимое количество дней</param>
+    /// <param name="generators">Коллекция предоставленных генераторов</param>
+    /// <returns>Коллекция генераторов и итоговое количество топлива</returns>
+    /// <exception cref="InvalidOperationException">
+    /// Выбрасывается если мощности предоставленных генераторов недостаточно для задачи 
+    /// </exception>
     public (IReadOnlyCollection<IGenerator>, Fuel totalFuel) Calculate
         (Power requiredPower, Days days, IReadOnlyCollection<IGenerator> generators)
     {
@@ -28,8 +42,7 @@ public class GreaterEfficiencyFuelCalculationStrategy : IFuelCalculationStrategy
             throw new InvalidOperationException(
                 "Не удалось выполнить операцию - недостаточно мощности предоставленных генераторов");
         }
-        
+
         return (usedGenerators.AsReadOnly(), new Fuel(fuel));
     }
-    
 }
