@@ -29,4 +29,6 @@ public interface IUserInterface
     /// <param name="generators">Выбранные генераторы</param>
     /// <param name="totalFuel">Требуемое общее топливо</param>
     public void DisplayResult(IReadOnlyCollection<IGenerator> generators, Fuel totalFuel);
+    
+    public void DisplayError(string message);
 }
