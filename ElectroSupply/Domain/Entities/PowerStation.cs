@@ -40,4 +40,9 @@ public class PowerStation : IPowerStation
     {
         _generators.Add(generator);
     }
+
+    public void AddRangeGenerators(IEnumerable<IGenerator> generators)
+    {
+        _generators.AddRange(generators);
+    }
 }
