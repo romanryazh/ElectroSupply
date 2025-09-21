@@ -2,6 +2,7 @@
 using ElectroSupply.Application.Services;
 using ElectroSupply.Application.Strategies;
 using ElectroSupply.Domain.Entities;
+using ElectroSupply.Infrastructure.Repositories;
 using ElectroSupply.UI.ConsoleUI;
 
 // Программа вычисляет литраж топлива, необходимого для работы генераторов в указанный
@@ -23,10 +24,19 @@ using ElectroSupply.UI.ConsoleUI;
 // Интерфейс пользователя представлен в абстрактном виде, реализован в виде консольного ввода-вывода.
 // Главный сервис приложения (PowerStationApp) использует прочие зависимости и запускает весь конвейер программы.
 
+
+// Дополнение. Для формулы вычисления "дешевизны" использован расчёт (расход топлива (л/ч) * цена (судя по всему, за литр) /
+//     / выходная мощность (кВт)
+
+    
 var station = PowerStation.Create("Череповецкая АЭС");
-var strategy = new GreaterEfficiencyFuelCalculationStrategy();
-var calculator = new FuelCalculator(strategy);
-var ui = new ConsoleUserInterface();
-var app = new PowerStationApp(ui, calculator, station);
+
+var fuelTypeRepository = new FuelTypeRepository();
+
+var calculator = new Calculator();
+
+var ui = new ConsoleUserInterface(fuelTypeRepository);
+
+var app = new PowerStationApp(ui, calculator, station, fuelTypeRepository);
 
 app.Run();

@@ -1,4 +1,5 @@
-﻿using ElectroSupply.Domain.Interfaces;
+﻿using ElectroSupply.Application.Interfaces;
+using ElectroSupply.Domain.Interfaces;
 using ElectroSupply.Domain.ValueObjects;
 
 namespace ElectroSupply.UI;
@@ -24,18 +25,24 @@ public interface IUserInterface
     /// Считывает требуемое количество дней от пользователя
     /// </summary>
     /// <returns>Количество дней</returns>
-    public Days ReadRequiredDays();
+    public Period ReadRequiredDays();
+    
+    public FuelType ReadFuelType();
+
+    public int ReadOperation();
     
     /// <summary>
     /// Выводит результат
     /// </summary>
     /// <param name="generators">Выбранные генераторы</param>
     /// <param name="totalFuel">Требуемое общее топливо</param>
-    public void DisplayResult(IReadOnlyCollection<IGenerator> generators, Fuel totalFuel);
+    public void DisplayResult(IResult result);
     
     /// <summary>
     /// Выводит сообщение об ошибке
     /// </summary>
     /// <param name="message">Текст сообщения</param>
     public void DisplayError(string message);
+    
+    public void DisplayFuelTypes();
 }
