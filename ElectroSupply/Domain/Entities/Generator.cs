@@ -48,7 +48,7 @@ public class Generator : IGenerator
     /// <para><paramref name="power"/> меньше или равна 0</para>
     /// <para><paramref name="fuelConsumption"/> меньше или равно 0</para>
     /// </exception>
-    public static Generator Create(string name, double power, double fuelConsumption)
+    public static Generator Create(string name, double power, double fuelConsumption, string fuelTypeName)
     {
         if (string.IsNullOrWhiteSpace(name))
         {
@@ -65,7 +65,7 @@ public class Generator : IGenerator
             throw new ArgumentException("Расход топлива должен быть больше нуля", nameof(fuelConsumption));
         }
         
-        return new Generator(name, new Power(power), new Fuel(fuelConsumption));
+        return new Generator(name, new Power(power), new Fuel(fuelConsumption, fuelTypeName));
     }
     
     
