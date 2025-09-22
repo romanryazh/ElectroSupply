@@ -17,7 +17,7 @@ public record Period
     /// </summary>
     /// <param name="value">значение</param>
     /// <exception cref="ArgumentException">Выбрасывается если <paramref name="value"/> меньше или равно 0</exception>
-    public Period(double value)
+    public Period(int value)
     {
         if (value <= 0)
         {

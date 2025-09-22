@@ -64,6 +64,11 @@ public class Generator : IGenerator
         {
             throw new ArgumentException("Расход топлива должен быть больше нуля", nameof(fuelConsumption));
         }
+
+        if (string.IsNullOrWhiteSpace(fuelTypeName))
+        {
+            throw new ArgumentException("Значение не может быть null или пустым.", nameof(name));
+        }
         
         return new Generator(name, new Power(power), new Fuel(fuelConsumption, fuelTypeName));
     }
