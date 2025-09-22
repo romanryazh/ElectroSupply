@@ -49,6 +49,16 @@ public class PowerStation : IPowerStation
     /// <param name="generator"></param>
     public void AddGenerator(IGenerator generator)
     {
+        if (generator == null)
+        {
+            throw new ArgumentNullException(nameof(generator), "Не может быть null");
+        }
+        
+        if (_generators.Any(g => g.Name == generator.Name))
+        {
+            throw new ArgumentException($"Генератор с названием {generator.Name} уже добавлен");
+        }
+        
         _generators.Add(generator);
     }
 
@@ -58,6 +68,13 @@ public class PowerStation : IPowerStation
     /// <param name="generators">Коллекция добавляемых генераторов</param>
     public void AddRangeGenerators(IEnumerable<IGenerator> generators)
     {
-        _generators.AddRange(generators);
+        foreach (var generator in generators)
+        {
+            if (_generators.Any(g => g.Name == generator.Name))
+            {
+                throw new ArgumentException($"Генератор с названием {generator.Name} уже добавлен");
+            }
+            _generators.Add(generator);
+        }
     }
 }

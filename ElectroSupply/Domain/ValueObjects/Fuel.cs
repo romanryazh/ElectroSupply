@@ -12,12 +12,14 @@ public record Fuel
     /// </summary>
     public double Value { get; init; }
     
+    public string FuelTypeName { get; init; }
+    
     /// <summary>
     /// Конструктор записи
     /// </summary>
     /// <param name="value">значение</param>
     /// <exception cref="ArgumentException">Выбрасывается если <paramref name="value"/> меньше 0</exception>
-    public Fuel(double value)
+    public Fuel(double value, string fuelTypeName)
     {
         if (value < 0)
         {
@@ -25,6 +27,7 @@ public record Fuel
         }
 
         Value = value;
+        FuelTypeName = fuelTypeName;
     }
 
     /// <summary>Returns a string that represents the current object.</summary>

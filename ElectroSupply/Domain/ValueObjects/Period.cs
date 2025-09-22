@@ -5,7 +5,7 @@ namespace ElectroSupply.Domain.ValueObjects;
 /// <summary>
 /// Количество дней
 /// </summary>
-public record Days
+public record Period
 {
     /// <summary>
     /// Значение для операций
@@ -17,7 +17,7 @@ public record Days
     /// </summary>
     /// <param name="value">значение</param>
     /// <exception cref="ArgumentException">Выбрасывается если <paramref name="value"/> меньше или равно 0</exception>
-    public Days(double value)
+    public Period(int value)
     {
         if (value <= 0)
         {
