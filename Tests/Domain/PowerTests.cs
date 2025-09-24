@@ -13,6 +13,10 @@ public class PowerTests
         
     }
     
+    /// <summary>
+    /// Тестирует создание экземпляра <see cref="Power"/> с валидными данными.
+    /// Проверяет на не Null, сопоставляет значение свойства Value до создания экземпляра и после.
+    /// </summary>
     [Fact]
     public void CreatePower_WithValidData_CreatesValidObject()
     {
@@ -25,6 +29,10 @@ public class PowerTests
         power.Value.Should().Be(value);
     }
 
+    /// <summary>
+    /// Тестирует создание экземпляра <see cref="Power"/> с некорректным значением Value. Проверяет выбрасывание исключения. 
+    /// </summary>
+    /// <param name="invalidValue">Некорректное значение Value</param>
     [Theory]
     [InlineData(-20)]
     [InlineData(-1)]

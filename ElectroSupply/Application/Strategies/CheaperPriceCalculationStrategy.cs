@@ -5,8 +5,22 @@ using ElectroSupply.Domain.ValueObjects;
 
 namespace ElectroSupply.Application.Strategies;
 
+/// <summary>
+/// Стратегия расчёта наиболее дешёвого энергопотребления 
+/// </summary>
+/// <param name="fuelTypes">Типы топлива</param>
 public class CheaperPriceCalculationStrategy(List<FuelType> fuelTypes) : ICalculationStrategy
 {
+    /// <summary>
+    /// Вычисляет итоговую стоимость
+    /// </summary>
+    /// <param name="requiredPower">Необходимая мощность</param>
+    /// <param name="period">Необходимое количество дней</param>
+    /// <param name="generators">Коллекция предоставленных генераторов</param>
+    /// <returns>Коллекция генераторов и итоговая наиболее низкая стоимость</returns>
+    /// <exception cref="InvalidOperationException">
+    /// Выбрасывается если мощности предоставленных генераторов недостаточно для задачи 
+    /// </exception>
     public IResult Calculate(Power requiredPower, Period period, IReadOnlyCollection<IGenerator> generators)
     {
         var sortedGenerators = generators
@@ -42,6 +56,13 @@ public class CheaperPriceCalculationStrategy(List<FuelType> fuelTypes) : ICalcul
         return new CheaperPriceResult(usedGenerators, totalPrice);
     }
 
+    /// <summary>
+    /// Вычисляет стоимость за одну единицу энергии (кВт)
+    /// </summary>
+    /// <param name="price">Стоимость топлива</param>
+    /// <param name="fuel">Количество топлива</param>
+    /// <param name="power">Мощность генератора</param>
+    /// <returns></returns>
     private decimal GetPriceForPowerUnit(decimal price, double fuel, double power)
     {
         return (price * (decimal)fuel) / (decimal)power;

@@ -4,6 +4,9 @@ using FluentAssertions;
 
 namespace Tests.Domain;
 
+/// <summary>
+/// Unit-тесты для объекта <see cref="FuelType"/>
+/// </summary>
 public class FuelTypeTests
 {
     private readonly Faker _faker = new();
@@ -12,7 +15,9 @@ public class FuelTypeTests
     {
         
     }
-    
+    /// <summary>
+    /// Тестирует создание экземпляра <see cref="FuelType"/> с валидными данными. Проверяет на не Null, сопоставляет значения свойств до создания экземпляра и после.
+    /// </summary>
     [Fact]
     public void CreateFuelType_WithValidData_CreatesValidObject()
     {
@@ -27,6 +32,10 @@ public class FuelTypeTests
         fuelType.Price.Should().Be(price);
     }
     
+    /// <summary>
+    /// Тестирует создание экземпляра FuelType с невалидным Name. Проверяет выбрасывание исключения при создании <see cref="FuelType"/> 
+    /// </summary>
+    /// <param name="invalidName">Некорректное значение для Name</param>
     [Theory]
     [InlineData("")]
     [InlineData("   ")]
@@ -39,6 +48,10 @@ public class FuelTypeTests
         action.Should().Throw<ArgumentNullException>();
     }
     
+    /// <summary>
+    /// Тестирует создание экземпляра FuelType с невалидным Price. Проверяет выбрасывание исключения при создании <see cref="FuelType"/>
+    /// </summary>
+    /// <param name="invalidPrice">Некорректное значение для Price</param>
     [Theory]
     [InlineData(-1)]
     public void CreateFuelType_WithInvalidPrice_ShouldThrow(decimal invalidPrice)

@@ -6,6 +6,9 @@ using FluentAssertions;
 
 namespace Tests.Domain;
 
+/// <summary>
+/// Unit-тесты для объекта <see cref="Generator"/>
+/// </summary>
 public class GeneratorTests
 {
     private readonly Faker _faker = new();
@@ -15,6 +18,9 @@ public class GeneratorTests
     private readonly Faker<Period> _periodFaker;
     private readonly Faker<Generator> _generatorFaker;
 
+    /// <summary>
+    /// Конструктор класса <see cref="GeneratorTests"/>. Создаёт экземпляр.
+    /// </summary>
     public GeneratorTests()
     {
         _fuelTypeFaker = new Faker<FuelType>()
@@ -33,6 +39,10 @@ public class GeneratorTests
                 _faker.Commerce.Product()));
     }
 
+    /// <summary>
+    /// Тестирует фабричный метод создания экземпляра <see cref="Generator"/> с корректными данными.
+    /// Проверяет на не Null, сопоставляет значения свойств до создания экземпляра и после.
+    /// </summary>
     [Fact]
     public void Create_WithValidData_CreatesValidEntity()
     {
@@ -50,6 +60,11 @@ public class GeneratorTests
         generator.Efficiency.Should().Be(power.Value / fuel.Value);
     }
 
+    /// <summary>
+    /// Тестирует фабричный метод создания экземпляра <see cref="Generator"/> с некорректным значением Name.
+    /// Проверяет корректность выбрасывания исключения.
+    /// </summary>
+    /// <param name="invalidName"></param>
     [Theory]
     [InlineData("")]
     [InlineData("   ")]
@@ -63,6 +78,11 @@ public class GeneratorTests
         action.Should().Throw<ArgumentException>();
     }
 
+    /// <summary>
+    /// Тестирует фабричный метод создания экземпляра <see cref="Generator"/> с некорректным значением Power.
+    /// Проверяет корректность выбрасывания исключения.
+    /// </summary>
+    /// <param name="invalidPower">Некорректное значение для Power</param>
     [Theory]
     [InlineData(0)]
     [InlineData(-4)]
@@ -74,7 +94,12 @@ public class GeneratorTests
         
         action.Should().Throw<ArgumentException>();
     }
-
+    
+    /// <summary>
+    /// Тестирует фабричный метод создания экземпляра <see cref="Generator"/> с некорректным значением Fuel.
+    /// Проверяет корректность выбрасывания исключения.
+    /// </summary>
+    /// <param name="invalidFuel">Некорректное значение для Fuel</param>
     [Theory]
     [InlineData(0)]
     [InlineData(-4)]
@@ -87,6 +112,11 @@ public class GeneratorTests
         action.Should().Throw<ArgumentException>();
     }
 
+    /// <summary>
+    /// Тестирует фабричный метод создания экземпляра <see cref="Generator"/> с некорректным значением FuelTypeName.
+    /// Проверяет корректность выбрасывания исключения. 
+    /// </summary>
+    /// <param name="invalidFuelType"></param>
     [Theory]
     [InlineData("")]
     [InlineData("   ")]
@@ -100,7 +130,7 @@ public class GeneratorTests
         action.Should().Throw<ArgumentException>();
     }
 
-
+    
     private Faker<Generator> GetCustomGeneratorFaker(Func<string>? nameGen = null, 
         Func<double>? powerGen = null, Func<double>? fuelGen = null, Func<string>? fuelTypeNameGen = null)
     {

@@ -4,6 +4,9 @@ using FluentAssertions;
 
 namespace Tests.Domain;
 
+/// <summary>
+/// Unit-тесты для объекта <see cref="PowerStation"/>
+/// </summary>
 public class PowerStationTests
 {
     private readonly Faker _faker = new();
@@ -13,6 +16,10 @@ public class PowerStationTests
         
     }
 
+    /// <summary>
+    /// Тестирует фабричный метод создания экземпляра <see cref="PowerStation"/> с корректными данными.
+    /// Проверяет на не Null, сопоставляет значение свойства Name до создания экземпляра и после.
+    /// </summary>
     [Fact]
     public void Create_WithValidData_ShouldCreatesValidEntity()
     {
@@ -25,6 +32,11 @@ public class PowerStationTests
         powerStation.Name.Should().Be(name);
     }
 
+    /// <summary>
+    /// Тестирует фабричный метод создания экземпляра <see cref="PowerStation"/> с некорректным значением Name.
+    /// Проверяет корректность выбрасывания исключения. 
+    /// </summary>
+    /// <param name="invalidName"></param>
     [Theory]
     [InlineData("")]
     [InlineData("   ")]
@@ -39,6 +51,10 @@ public class PowerStationTests
         action.Should().Throw<ArgumentException>();
     }
 
+    /// <summary>
+    /// Тестирует метод добавления генератора с валидными данными.
+    /// Проверяет коллекцию генераторов станции до и после вызова метода AddGenerator
+    /// </summary>
     [Fact]
     public void AddGenerator_WithValidData_ShouldAddGenerator()
     {
@@ -52,6 +68,10 @@ public class PowerStationTests
         powerStation.Generators.Should().HaveCount(1).And.Contain(generator);
     }
 
+    /// <summary>
+    /// Тестирует метод добавления генератора с добавлением дубликатов.
+    /// Проверяет выбрасывание исключения при одинаковых значениях Name для добавляемых генераторов
+    /// </summary>
     [Fact]
     public void AddGenerator_Duplicates_ShouldThrowException()
     {
@@ -72,6 +92,9 @@ public class PowerStationTests
         action.Should().Throw<ArgumentException>();
     }
     
+    /// <summary>
+    /// Тестирует метод добавления генератора со значением Null. Проверяет выбрасывание исключения.
+    /// </summary>
     [Fact]
     public void AddGenerator_WithNull_ShouldThrowException()
     {
@@ -84,6 +107,10 @@ public class PowerStationTests
         action.Should().Throw<ArgumentException>();
     }
 
+    /// <summary>
+    /// Тестирует метод добавления коллекции генераторов с валидными данными.
+    /// Сопоставляет содержимое коллекции до добавления и после.
+    /// </summary>
     [Fact]
     public void AddGeneratorRange_WithValidData_ShouldAddGeneratorRange()
     {

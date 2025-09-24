@@ -107,6 +107,10 @@ public class PowerStationApp
         }
     }
 
+    /// <summary>
+    /// Получает данные запроса
+    /// </summary>
+    /// <returns>Возвращает данные запроса - мощность, период (дни), коллекцию генераторов</returns>
     private (Power power, Period period, IReadOnlyCollection<IGenerator>) GetQueryData()
     {
         var power = _ui.ReadRequiredPower();

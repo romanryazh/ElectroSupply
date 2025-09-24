@@ -4,6 +4,9 @@ using FluentAssertions;
 
 namespace Tests.Domain;
 
+/// <summary>
+/// Unit-тесты для объекта <see cref="Fuel"/>
+/// </summary>
 public class FuelTests
 {
     private readonly Faker _faker = new();
@@ -13,6 +16,9 @@ public class FuelTests
         
     }
     
+    /// <summary>
+    /// Тестирует создание экземпляра <see cref="Fuel"/> с валидными данными. Проверяет на не Null, корректность значения и имя типа топлива.
+    /// </summary>
     [Fact]
     public void CreateFuel_WithValidData_CreatesValidObject()
     {
@@ -27,6 +33,10 @@ public class FuelTests
         fuel.FuelTypeName.Should().Be(fuelTypeName);
     }
 
+    /// <summary>
+    /// Тестирует создание экземпляра <see cref="Fuel"/> с некорректным значением Value. Проверяет корректность выбрасывания исключения при создании Fuel
+    /// </summary>
+    /// <param name="invalidValue">Некорректное значение для Value у <see cref="Fuel"/></param>
     [Theory]
     [InlineData(-34)]
     [InlineData(-1)]
